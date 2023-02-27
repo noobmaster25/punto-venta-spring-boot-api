@@ -11,7 +11,7 @@ import com.example.demo.repository.ICategoriaRepository;
 
 @Service
 public class CategoriaService {
-	
+
 	@Autowired
 	private ICategoriaRepository categoriaRepo;
 
@@ -38,8 +38,6 @@ public class CategoriaService {
 
 	public Categoria actualizarCategoria(int id, Categoria categoria) throws Exception {
 		Optional<Categoria> categoriaAnterior = categoriaRepo.findById(id);
-		
-
 
 		if (categoriaAnterior.isEmpty()) {
 			throw new Exception("no se encontro la categoria");
