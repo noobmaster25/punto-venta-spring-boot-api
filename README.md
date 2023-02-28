@@ -2,6 +2,9 @@
 
 Este proyecto es una API REST para un punto de venta sencillo. Permite gestionar clientes, órdenes, detalles de órdenes, categorías y productos.
 
+## Estado
+`Actualmente en desarrollo`
+
 ## Tecnologías utilizadas
 - `Java`
 - `Spring Boot`
