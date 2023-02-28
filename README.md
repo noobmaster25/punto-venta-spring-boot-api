@@ -60,6 +60,12 @@ La API REST tiene los siguientes endpoints:
 
 Puedes utilizar una herramienta como Postman o Insomnia para realizar las solicitudes HTTP a la API REST.
 
+`ejemplo ` /productos
+[![Captura-de-pantalla-2023-02-27-21-20-32.png](https://i.postimg.cc/pThQL7RF/Captura-de-pantalla-2023-02-27-21-20-32.png)](https://postimg.cc/dkFZW57s)
+
+`ejemplo` /ordenes
+[![Captura-de-pantalla-2023-02-27-21-27-46.png](https://i.postimg.cc/zGQVGfBx/Captura-de-pantalla-2023-02-27-21-27-46.png)](https://postimg.cc/qN8km42K)
+
 ## Contribuir
 Si quieres contribuir a este proyecto, por favor sigue estas instrucciones:
 1. Crea un fork del repositorio.
