@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.DTO.DetalleOrdenDTO;
+import com.example.demo.DTO.DetalleOrdenNuevaDTO;
 import com.example.demo.entities.DetalleOrden;
 import com.example.demo.service.DetalleOrdenService;
 
@@ -25,28 +25,33 @@ public class DetalleOrdenController {
 
 	@Autowired
 	private DetalleOrdenService detalleServi;
-	
+
 	@GetMapping
-	public ResponseEntity<List<DetalleOrdenDTO>> obtenerTodos(){
+	public ResponseEntity<List<DetalleOrdenDTO>> obtenerTodos() {
 		return ResponseEntity.ok(detalleServi.obtenerTodos());
 	}
+
 	@GetMapping("/{id}")
-	public ResponseEntity<DetalleOrden> obtenerPorId(@PathVariable Integer id) throws Exception{
+	public ResponseEntity<DetalleOrdenDTO> obtenerPorId(@PathVariable Integer id) throws Exception {
 		return ResponseEntity.ok(detalleServi.obtenerPorId(id));
 	}
+
 	@PostMapping
-	public ResponseEntity<DetalleOrden> guardarDetalleOrden(@RequestBody DetalleOrden detalleOrden){
-		return new ResponseEntity<>(detalleServi.guardarDetalle(detalleOrden),HttpStatus.CREATED);
+	public ResponseEntity<DetalleOrdenDTO> guardarDetalleOrden(@RequestBody DetalleOrdenNuevaDTO detalleOrdenDto)
+			throws Exception {
+		return new ResponseEntity<>(detalleServi.guardarDetalle(detalleOrdenDto), HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<DetalleOrden> actualizarPorId(@PathVariable Integer id, @RequestBody DetalleOrden detalleOrden) throws Exception{
-		return ResponseEntity.ok(detalleServi.actualizarDetalle(id, detalleOrden));
+	public ResponseEntity<DetalleOrdenDTO> actualizarPorId(@PathVariable Integer id,
+			@RequestBody DetalleOrdenNuevaDTO detalleOrdenDto) throws Exception {
+		return ResponseEntity.ok(detalleServi.actualizarDetalle(id, detalleOrdenDto));
 	}
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> eliminarPorId(@PathVariable Integer id) throws Exception{
+	public ResponseEntity<Void> eliminarPorId(@PathVariable Integer id) throws Exception {
 		detalleServi.eliminarDetalle(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-		
+
 }
