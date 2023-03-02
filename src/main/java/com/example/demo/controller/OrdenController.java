@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.DTO.CrearOrdenDTO;
 import com.example.demo.DTO.OrdenDTO;
-import com.example.demo.entities.Orden;
+import com.example.demo.DTO.OrdenNuevaDTO;
 import com.example.demo.service.OrdenService;
 
 @RestController
@@ -37,13 +36,12 @@ public class OrdenController {
 		return ResponseEntity.ok(ordenServi.obtenerPorId(id));
 	}
 	@PostMapping
-	public ResponseEntity<OrdenDTO> guardarOrden(@RequestBody CrearOrdenDTO orden) throws Exception{
-		System.out.println(orden);
-		return new ResponseEntity<>(ordenServi.guardarOrden(orden), HttpStatus.CREATED);
+	public ResponseEntity<OrdenDTO> guardarOrden(@RequestBody OrdenNuevaDTO ordenDto) throws Exception{
+		return new ResponseEntity<>(ordenServi.guardarOrden(ordenDto), HttpStatus.CREATED);
 	}
 	@PutMapping("/{id}")
-	public ResponseEntity<Orden> actualizarOrden(@PathVariable Integer id, @RequestBody Orden orden) throws Exception{
-		return ResponseEntity.ok(ordenServi.actualizarOrden(id, orden));
+	public ResponseEntity<OrdenDTO> actualizarOrden(@PathVariable Integer id, @RequestBody OrdenNuevaDTO ordenDto) throws Exception{
+		return ResponseEntity.ok(ordenServi.actualizarOrden(id, ordenDto));
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> eliminarPorId(@PathVariable Integer id) throws Exception{
