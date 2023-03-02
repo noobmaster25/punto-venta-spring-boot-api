@@ -28,20 +28,16 @@ public class CategoriaController {
 	
 	@GetMapping
 	public ResponseEntity<List<Categoria>> obtenerTodos(){
-		List<Categoria> categorias = categoriaServi.obtenerTodos();
-		return ResponseEntity.ok(categorias);
+		return ResponseEntity.ok(categoriaServi.obtenerTodos());
 	}
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> obtenerPorId(@PathVariable int id) throws Exception{
-		System.out.println(id);
 		Categoria categoria = categoriaServi.obtenerPorId(id);
 		return new ResponseEntity<>(categoria,HttpStatus.OK);
 	}
 	
 	@PostMapping
 	public ResponseEntity<Categoria> crearCategoria(@RequestBody Categoria categoria){
-		System.out.println("gola");
-		System.out.println(categoria);
 		Categoria categoriaGuardada = categoriaServi.guardarCategoria(categoria);
 		return new ResponseEntity<>(categoriaGuardada,HttpStatus.CREATED);
 	}
@@ -52,7 +48,6 @@ public class CategoriaController {
 	}
 	@PutMapping("/{id}")
 	public ResponseEntity<Categoria> actualizarCategoria(@PathVariable int id ,@RequestBody Categoria categoria) throws Exception{
-		
 		return ResponseEntity.ok(categoriaServi.actualizarCategoria(id, categoria));
 	}
 	
