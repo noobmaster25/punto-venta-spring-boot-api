@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.example.demo.DTO.DetalleOrdenDTO;
 import com.example.demo.DTO.DetalleOrdenNuevaDTO;
 import com.example.demo.DTO.ProductoDetalleOrdenDTO;
-import com.example.demo.entities.Cliente;
 import com.example.demo.entities.DetalleOrden;
 import com.example.demo.entities.Orden;
 import com.example.demo.entities.Producto;

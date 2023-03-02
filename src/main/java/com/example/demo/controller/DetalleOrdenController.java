@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.DTO.DetalleOrdenDTO;
 import com.example.demo.DTO.DetalleOrdenNuevaDTO;
-import com.example.demo.entities.DetalleOrden;
 import com.example.demo.service.DetalleOrdenService;
 
 @RestController
