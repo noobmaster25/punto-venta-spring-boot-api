@@ -27,25 +27,31 @@ import jakarta.validation.Valid;
 public class ProductoController {
 	@Autowired
 	private ProductoService productoServi;
-	
+
 	@GetMapping
 	public ResponseEntity<List<ProductoDTO>> obtenerTodos() {
 		return ResponseEntity.ok(productoServi.obtenerTodos());
 	}
+
 	@GetMapping("/{id}")
-	public ResponseEntity<ProductoDTO> obtenPorId(@PathVariable int id) throws Exception{		
-		return new ResponseEntity<>(productoServi.obtenerPorId(id),HttpStatus.OK);
+	public ResponseEntity<ProductoDTO> obtenPorId(@PathVariable int id) throws Exception {
+		return new ResponseEntity<>(productoServi.obtenerPorId(id), HttpStatus.OK);
 	}
+
 	@PostMapping
-	public ResponseEntity<ProductoDTO> crearProducto(@Valid @RequestBody ProductoNuevoDTO productoDto) throws Exception {
-		ProductoDTO productoCreadoDto = productoServi.crearProducto(productoDto);		
+	public ResponseEntity<ProductoDTO> crearProducto(@Valid @RequestBody ProductoNuevoDTO productoDto)
+			throws Exception {
+		ProductoDTO productoCreadoDto = productoServi.crearProducto(productoDto);
 		return new ResponseEntity<>(productoCreadoDto, HttpStatus.CREATED);
 	}
+
 	@PutMapping("{id}")
-	public ResponseEntity<ProductoDTO> actualizarProducto(@PathVariable int id , @RequestBody ProductoNuevoDTO productoDto) throws Exception{
+	public ResponseEntity<ProductoDTO> actualizarProducto(@PathVariable int id,
+			@RequestBody ProductoNuevoDTO productoDto) throws Exception {
 		ProductoDTO productoActualizadoDto = productoServi.actualizarProducto(id, productoDto);
 		return ResponseEntity.ok(productoActualizadoDto);
 	}
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> eliminarPorId(@PathVariable int id) {
 		productoServi.eliminarProducto(id);

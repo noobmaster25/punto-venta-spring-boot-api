@@ -26,7 +26,7 @@ public class OrdenDTO {
 	private LocalDateTime fechaCreacion;
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime fechaRecibida;
-	private ClienteDTO cliente;
+	private ClienteSimpleDTO cliente;
 	private List<DetalleOrdenDTO> detalleOrden;
 	
 	public OrdenDTO(Orden orden) {
@@ -34,7 +34,7 @@ public class OrdenDTO {
 		this.numero = orden.getNumero();
 		this.fechaCreacion = orden.getFechaCreacion();
 		this.fechaRecibida = orden.getFechaRecibida();
-		this.cliente =new ClienteDTO(orden.getCliente());
+		this.cliente =new ClienteSimpleDTO(orden.getCliente());
 		List<DetalleOrdenDTO> listaDetalles = new ArrayList<>();
 		for (DetalleOrden detalleOrden : orden.getDetalleOrden()) {
 			listaDetalles.add(new DetalleOrdenDTO(detalleOrden));
