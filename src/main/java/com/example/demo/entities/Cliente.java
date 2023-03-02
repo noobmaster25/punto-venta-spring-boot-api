@@ -41,5 +41,17 @@ public class Cliente {
 		this.password = cliente.getPassword();
 	}
 
+	public Cliente(String nombre, String username, String email, String direccion, String telefono, String tipo,
+			String password) {
+		this.nombre = nombre;
+		this.username = username;
+		this.email = email;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.tipo = tipo;
+		this.password = password;
+	}
+	
+
 	
 }

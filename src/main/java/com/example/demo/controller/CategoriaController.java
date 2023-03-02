@@ -25,31 +25,34 @@ public class CategoriaController {
 
 	@Autowired
 	private CategoriaService categoriaServi;
-	
+
 	@GetMapping
-	public ResponseEntity<List<Categoria>> obtenerTodos(){
+	public ResponseEntity<List<Categoria>> obtenerTodos() {
 		return ResponseEntity.ok(categoriaServi.obtenerTodos());
 	}
+
 	@GetMapping("/{id}")
-	public ResponseEntity<Categoria> obtenerPorId(@PathVariable int id) throws Exception{
+	public ResponseEntity<Categoria> obtenerPorId(@PathVariable int id) throws Exception {
 		Categoria categoria = categoriaServi.obtenerPorId(id);
-		return new ResponseEntity<>(categoria,HttpStatus.OK);
+		return new ResponseEntity<>(categoria, HttpStatus.OK);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Categoria> crearCategoria(@RequestBody Categoria categoria){
+	public ResponseEntity<Categoria> crearCategoria(@RequestBody Categoria categoria) {
 		Categoria categoriaGuardada = categoriaServi.guardarCategoria(categoria);
-		return new ResponseEntity<>(categoriaGuardada,HttpStatus.CREATED);
+		return new ResponseEntity<>(categoriaGuardada, HttpStatus.CREATED);
 	}
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> eliminarPorId(@PathVariable int id){
+	public ResponseEntity<Void> eliminarPorId(@PathVariable int id) {
 		categoriaServi.eliminarCategoria(id);
-		return new  ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
 	@PutMapping("/{id}")
-	public ResponseEntity<Categoria> actualizarCategoria(@PathVariable int id ,@RequestBody Categoria categoria) throws Exception{
+	public ResponseEntity<Categoria> actualizarCategoria(@PathVariable int id, @RequestBody Categoria categoria)
+			throws Exception {
 		return ResponseEntity.ok(categoriaServi.actualizarCategoria(id, categoria));
 	}
-	
-	
+
 }

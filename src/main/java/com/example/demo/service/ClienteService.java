@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.DTO.ClienteDTO;
+import com.example.demo.DTO.ClienteNuevoDTO;
 import com.example.demo.entities.Cliente;
 import com.example.demo.repository.IClienteRepository;
 
@@ -30,8 +31,12 @@ public class ClienteService {
 		return new ClienteDTO(clienteOptional.get());
 	}
 
-	public ClienteDTO guardarCliente(Cliente cliente) {
-		return new ClienteDTO(clienteRepo.save(cliente));
+	public ClienteDTO guardarCliente(ClienteNuevoDTO clienteDto) {
+		Cliente nuevoCliente = new Cliente(clienteDto.getNombre(), clienteDto.getUsername(), clienteDto.getEmail(),
+				clienteDto.getDireccion(), clienteDto.getTelefono(), clienteDto.getTipo(), clienteDto.getPassword());
+
+		clienteRepo.save(nuevoCliente);
+		return new ClienteDTO(nuevoCliente);
 	}
 
 	public void eliminarClinetePorId(Integer id) throws Exception {
@@ -42,16 +47,22 @@ public class ClienteService {
 		clienteRepo.deleteById(id);
 	}
 
-	public Cliente actualizarPorId(Integer id, Cliente cliente) throws Exception {
+	public ClienteDTO actualizarPorId(Integer id, ClienteNuevoDTO clienteDto) throws Exception {
 		Optional<Cliente> clienteOptional = clienteRepo.findById(id);
 		if (clienteOptional.isEmpty()) {
 			throw new Exception("elemento no exsite");
 		}
 
-		Cliente clienteActualizado = new Cliente(cliente);
-		clienteActualizado.setId_cliente(clienteOptional.get().getId_cliente());
-		System.out.println(clienteActualizado);
+		Cliente clienteActualizado = clienteOptional.get();
 
-		return clienteRepo.save(clienteActualizado);
+		clienteActualizado.setNombre(clienteDto.getNombre());
+		clienteActualizado.setUsername(clienteDto.getUsername());
+		clienteActualizado.setEmail(clienteDto.getEmail());
+		clienteActualizado.setDireccion(clienteDto.getDireccion());
+		clienteActualizado.setTelefono(clienteDto.getTelefono());
+		clienteActualizado.setPassword(clienteDto.getPassword());
+		clienteRepo.save(clienteActualizado);
+
+		return new ClienteDTO(clienteActualizado);
 	}
 }

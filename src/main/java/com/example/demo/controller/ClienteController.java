@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.DTO.ClienteDTO;
-import com.example.demo.entities.Cliente;
+import com.example.demo.DTO.ClienteNuevoDTO;
 import com.example.demo.service.ClienteService;
 
 @RestController
@@ -24,29 +24,34 @@ import com.example.demo.service.ClienteService;
 @CrossOrigin
 public class ClienteController {
 
-	@Autowired ClienteService clienteServi;
-	
+	@Autowired
+	ClienteService clienteServi;
+
 	@GetMapping
-	public ResponseEntity<List<ClienteDTO>> obtenerTodos() throws Exception{
-		return new ResponseEntity<>(clienteServi.obtenerTodos(),HttpStatus.OK);
+	public ResponseEntity<List<ClienteDTO>> obtenerTodos() throws Exception {
+		return new ResponseEntity<>(clienteServi.obtenerTodos(), HttpStatus.OK);
 	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<ClienteDTO> obtenerPorId(@PathVariable Integer id) throws Exception {
-		return new ResponseEntity<>(clienteServi.obtenerPorId(id),HttpStatus.OK);
+		return new ResponseEntity<>(clienteServi.obtenerPorId(id), HttpStatus.OK);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<ClienteDTO> guardarCliente(@RequestBody Cliente cliente) {
-		return new ResponseEntity<>(clienteServi.guardarCliente(cliente),HttpStatus.CREATED);
+	public ResponseEntity<ClienteDTO> guardarCliente(@RequestBody ClienteNuevoDTO clienteDto) {
+		return new ResponseEntity<>(clienteServi.guardarCliente(clienteDto), HttpStatus.CREATED);
 	}
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> eliminarPorId(@PathVariable Integer id) throws Exception{
+	public ResponseEntity<Void> eliminarPorId(@PathVariable Integer id) throws Exception {
 		clienteServi.eliminarClinetePorId(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+
 	@PutMapping("/{id}")
-	public ResponseEntity<Cliente> actualizarClientePorId(@PathVariable Integer id, @RequestBody Cliente cliente) throws Exception{
-		return ResponseEntity.ok(clienteServi.actualizarPorId(id, cliente));
+	public ResponseEntity<ClienteDTO> actualizarClientePorId(@PathVariable Integer id,
+			@RequestBody ClienteNuevoDTO clienteDto) throws Exception {
+		return ResponseEntity.ok(clienteServi.actualizarPorId(id, clienteDto));
 	}
-	
+
 }
