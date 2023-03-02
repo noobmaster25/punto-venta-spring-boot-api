@@ -44,9 +44,9 @@ public class ProductoController {
 		return new ResponseEntity<>(productoCreadoDto, HttpStatus.CREATED);
 	}
 	@PutMapping("{id}")
-	public ResponseEntity<Producto> actualizarProducto(@PathVariable int id , @RequestBody Producto producto) throws Exception{
-		Producto productoActualizado = productoServi.actualizarProducto(id, producto);
-		return ResponseEntity.ok(productoActualizado);
+	public ResponseEntity<ProductoDTO> actualizarProducto(@PathVariable int id , @RequestBody ProductoNuevoDTO productoDto) throws Exception{
+		ProductoDTO productoActualizadoDto = productoServi.actualizarProducto(id, productoDto);
+		return ResponseEntity.ok(productoActualizadoDto);
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> eliminarPorId(@PathVariable int id) {

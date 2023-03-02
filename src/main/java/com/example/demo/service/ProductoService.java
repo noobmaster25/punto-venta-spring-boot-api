@@ -59,19 +59,27 @@ public class ProductoService {
 		repoProducto.deleteById(id);
 	}
 
-	public Producto actualizarProducto(int id, Producto producto) throws Exception {
+	public ProductoDTO actualizarProducto(int id, ProductoNuevoDTO productoDto) throws Exception {
 		Optional<Producto> productoAnterior = repoProducto.findById(id);
 		if (productoAnterior.isEmpty()) {
 			throw new Exception("producto no encontrado");
 		}
+		Optional<Categoria> categoriaActualizada = categoriaRepo.findById(productoDto.getId_categoria());
+		if (categoriaActualizada.isEmpty()) {
+			throw new Exception("categoria no existe");
+		}
 		Producto productoActualizado = productoAnterior.get();
-		productoActualizado.setNombre(producto.getNombre());
-		productoActualizado.setDescripcion(producto.getDescripcion());
-		productoActualizado.setPrecio(producto.getPrecio());
-		productoActualizado.setCantidad(producto.getCantidad());
-		productoActualizado.setCategoria(producto.getCategoria());
+		productoActualizado.setNombre(productoDto.getNombre());
+		productoActualizado.setDescripcion(productoDto.getDescripcion());
+		productoActualizado.setPrecio(productoDto.getPrecio());
+		productoActualizado.setCantidad(productoDto.getCantidad());
+		productoActualizado.setCategoria(categoriaActualizada.get());
+		
+		repoProducto.save(productoActualizado);
+		
+		
 
-		return repoProducto.save(productoActualizado);
+		return new ProductoDTO(productoActualizado);
 
 	}
 
