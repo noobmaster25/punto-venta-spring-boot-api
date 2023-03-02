@@ -1,11 +1,7 @@
 package com.example.demo.DTO;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-
-import com.example.demo.entities.DetalleOrden;
-import com.example.demo.entities.Orden;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
@@ -17,7 +13,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CrearOrdenDTO {
+public class OrdenNuevaDTO {
 	
 	private String numero;
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")

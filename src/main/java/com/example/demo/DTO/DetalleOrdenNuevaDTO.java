@@ -12,7 +12,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CrearDetalleOrdenDTO {
+public class DetalleOrdenNuevaDTO {
 	private Integer id_detalle_orden;
 	private double cantidad;
 	private String nombre;

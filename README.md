@@ -2,6 +2,9 @@
 
 Este proyecto es una API REST para un punto de venta sencillo. Permite gestionar clientes, órdenes, detalles de órdenes, categorías y productos.
 
+## Estado
+`Actualmente en desarrollo`
+
 ## Tecnologías utilizadas
 - `Java`
 - `Spring Boot`
@@ -59,6 +62,12 @@ La API REST tiene los siguientes endpoints:
 - `DELETE /productos/{id}`: Elimina un producto por su ID.
 
 Puedes utilizar una herramienta como Postman o Insomnia para realizar las solicitudes HTTP a la API REST.
+
+**Ejemplo** `GET /productos`
+[![Captura-de-pantalla-2023-02-27-21-20-32.png](https://i.postimg.cc/pThQL7RF/Captura-de-pantalla-2023-02-27-21-20-32.png)](https://postimg.cc/dkFZW57s)
+
+**Ejemplo** `GET /ordenes`
+[![Captura-de-pantalla-2023-02-27-21-27-46.png](https://i.postimg.cc/zGQVGfBx/Captura-de-pantalla-2023-02-27-21-27-46.png)](https://postimg.cc/qN8km42K)
 
 ## Contribuir
 Si quieres contribuir a este proyecto, por favor sigue estas instrucciones:

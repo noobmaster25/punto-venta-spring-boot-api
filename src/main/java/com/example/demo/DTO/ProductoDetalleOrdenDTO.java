@@ -17,14 +17,12 @@ public class ProductoDetalleOrdenDTO {
 	private Integer id_producto;
 	private String descripcion;
   	private String nombre;
-    private Double precio;
     private String categoria;
     
     public ProductoDetalleOrdenDTO(Producto producto) {
         this.id_producto = producto.getId_producto();
         this.nombre = producto.getNombre();
         this.descripcion = producto.getDescripcion();
-        this.precio = producto.getPrecio();
  
         if (producto.getCategoria() != null) {
             this.categoria = producto.getCategoria().getNombre();
