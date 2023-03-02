@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.entities.Categoria;
+import com.example.demo.DTO.CategoriaDTO;
+import com.example.demo.DTO.CategoriaNuevaDTO;
 import com.example.demo.service.CategoriaService;
 
 @RestController
@@ -27,19 +28,18 @@ public class CategoriaController {
 	private CategoriaService categoriaServi;
 
 	@GetMapping
-	public ResponseEntity<List<Categoria>> obtenerTodos() {
+	public ResponseEntity<List<CategoriaDTO>> obtenerTodos() {
 		return ResponseEntity.ok(categoriaServi.obtenerTodos());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Categoria> obtenerPorId(@PathVariable int id) throws Exception {
-		Categoria categoria = categoriaServi.obtenerPorId(id);
-		return new ResponseEntity<>(categoria, HttpStatus.OK);
+	public ResponseEntity<CategoriaDTO> obtenerPorId(@PathVariable int id) throws Exception {
+		return new ResponseEntity<>(categoriaServi.obtenerPorId(id), HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity<Categoria> crearCategoria(@RequestBody Categoria categoria) {
-		Categoria categoriaGuardada = categoriaServi.guardarCategoria(categoria);
+	public ResponseEntity<CategoriaDTO> crearCategoria(@RequestBody CategoriaNuevaDTO categoriaDto) {
+		CategoriaDTO categoriaGuardada = categoriaServi.guardarCategoria(categoriaDto);
 		return new ResponseEntity<>(categoriaGuardada, HttpStatus.CREATED);
 	}
 
@@ -50,9 +50,9 @@ public class CategoriaController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Categoria> actualizarCategoria(@PathVariable int id, @RequestBody Categoria categoria)
-			throws Exception {
-		return ResponseEntity.ok(categoriaServi.actualizarCategoria(id, categoria));
+	public ResponseEntity<CategoriaDTO> actualizarCategoria(@PathVariable int id,
+			@RequestBody CategoriaNuevaDTO categoriaDto) throws Exception {
+		return ResponseEntity.ok(categoriaServi.actualizarCategoria(id, categoriaDto));
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.example.demo.entities;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,5 +25,10 @@ public class Categoria {
 	private Integer id_categoria;
 	private String nombre;
 	private String descripcion;
+
+	public Categoria(String nombre, String descripcion) {
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+	}
 
 }
