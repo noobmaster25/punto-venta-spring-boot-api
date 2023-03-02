@@ -8,54 +8,92 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.DTO.DetalleOrdenDTO;
+import com.example.demo.DTO.DetalleOrdenNuevaDTO;
 import com.example.demo.DTO.ProductoDetalleOrdenDTO;
 import com.example.demo.entities.DetalleOrden;
+import com.example.demo.entities.Orden;
+import com.example.demo.entities.Producto;
 import com.example.demo.repository.IDetalleOrden;
+import com.example.demo.repository.IOrdenRepository;
+import com.example.demo.repository.IProductoRepository;
 
 @Service
 public class DetalleOrdenService {
 
 	@Autowired
 	private IDetalleOrden detalleRepo;
-	
+
+	@Autowired
+	private IOrdenRepository ordenRepo;
+
+	@Autowired
+	private IProductoRepository productoRepo;
+
 	public List<DetalleOrdenDTO> obtenerTodos() {
 		List<DetalleOrden> detalles = detalleRepo.findAll();
-		List<DetalleOrdenDTO> detallesDto = detalles.stream().map(d-> new DetalleOrdenDTO(d.getId_detalle_orden(),
-				d.getCantidad(),
-				d.getPrecio(),
-				d.getTotal(),
-				d.getOrden().getId_orden(),
-				new ProductoDetalleOrdenDTO(d.getProductos()))).collect(Collectors.toList());
+		List<DetalleOrdenDTO> detallesDto = detalles.stream()
+				.map(d -> new DetalleOrdenDTO(d.getId_detalle_orden(), d.getCantidad(), d.getPrecio(), d.getTotal(),
+						d.getOrden().getId_orden(), new ProductoDetalleOrdenDTO(d.getProductos())))
+				.collect(Collectors.toList());
 		return detallesDto;
 	}
-	public DetalleOrden obtenerPorId(Integer id) throws Exception {
+
+	public DetalleOrdenDTO obtenerPorId(Integer id) throws Exception {
 		Optional<DetalleOrden> detalleOptional = detalleRepo.findById(id);
-		if (detalleOptional.isEmpty()) throw new Exception("sin elemento");
-		return detalleOptional.get();
-		
+		if (detalleOptional.isEmpty())
+			throw new Exception("sin elemento");
+		return new DetalleOrdenDTO(detalleOptional.get());
+
 	}
-	public DetalleOrden guardarDetalle(DetalleOrden detalleOrden) {
-		return detalleRepo.save(detalleOrden);
+
+	public DetalleOrdenDTO guardarDetalle(DetalleOrdenNuevaDTO detalleOrdenDto) throws Exception {
+		Optional<Orden> orden = ordenRepo.findById(detalleOrdenDto.getId_orden());
+		Optional<Producto> producto = productoRepo.findById(detalleOrdenDto.getId_producto());
+		if (orden.isEmpty()) {
+			throw new Exception("no existe orden");
+		}
+		if (producto.isEmpty()) {
+			throw new Exception("no existe producto");
+		}
+		DetalleOrden detalleOrdenNueva = new DetalleOrden(detalleOrdenDto.getNombre(), detalleOrdenDto.getCantidad(),
+				detalleOrdenDto.getPrecio(), detalleOrdenDto.getTotal(), orden.get(), producto.get());
+		detalleRepo.save(detalleOrdenNueva);
+
+		return new DetalleOrdenDTO(detalleOrdenNueva);
 	}
+
 	public void eliminarDetalle(Integer id) throws Exception {
 		Optional<DetalleOrden> detalleOptional = detalleRepo.findById(id);
-		if (detalleOptional.isEmpty()) throw new Exception("sin elemento");
+		if (detalleOptional.isEmpty())
+			throw new Exception("sin elemento");
 		detalleRepo.deleteById(id);
-		
+
 	}
-	public DetalleOrden actualizarDetalle(Integer id, DetalleOrden detalleOrden) throws Exception {
+
+	public DetalleOrdenDTO actualizarDetalle(Integer id, DetalleOrdenNuevaDTO detalleOrdenDto) throws Exception {
 		Optional<DetalleOrden> detalleOptional = detalleRepo.findById(id);
-		if (detalleOptional.isEmpty()) throw new Exception("sin elemento");
-		
-		DetalleOrden detalleActualizada = detalleOptional.get();
-		detalleActualizada.setCantidad(detalleOrden.getCantidad());
-		detalleActualizada.setNombre(detalleOrden.getNombre());
-		detalleActualizada.setOrden(detalleOrden.getOrden());
-		detalleActualizada.setPrecio(detalleOrden.getPrecio());
-		detalleActualizada.setProductos(detalleOrden.getProductos());
-		detalleActualizada.setTotal(detalleOrden.getTotal());
-		return detalleRepo.save(detalleActualizada);
-		
+		if (detalleOptional.isEmpty())
+			throw new Exception("sin elemento");
+
+		Optional<Orden> orden = ordenRepo.findById(detalleOrdenDto.getId_orden());
+		if (orden.isEmpty())
+			throw new Exception("no existe orden");
+
+		Optional<Producto> producto = productoRepo.findById(detalleOrdenDto.getId_producto());
+		if (producto.isEmpty())
+			throw new Exception("producto no existe");
+
+		DetalleOrden detalleActualizado = detalleOptional.get();
+		detalleActualizado.setCantidad(detalleOrdenDto.getCantidad());
+		detalleActualizado.setNombre(detalleOrdenDto.getNombre());
+		detalleActualizado.setOrden(orden.get());
+		detalleActualizado.setPrecio(detalleOrdenDto.getPrecio());
+		detalleActualizado.setProductos(producto.get());
+		detalleActualizado.setTotal(detalleOrdenDto.getTotal());
+
+		detalleRepo.save(detalleActualizado);
+		return new DetalleOrdenDTO(detalleActualizado);
+
 	}
-	
+
 }

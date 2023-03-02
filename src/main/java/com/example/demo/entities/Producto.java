@@ -35,6 +35,18 @@ public class Producto {
 	@ManyToOne
 	@JoinColumn(name = "id_categoria",referencedColumnName = "id_categoria")
 	private Categoria categoria;
+	
+	
+	
+	public Producto(String nombre, String descripcion, int cantidad, double precio, Categoria categoria) {
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.cantidad = cantidad;
+		this.precio = precio;
+		this.categoria = categoria;
+	}
+	
+	
 
 	
 }

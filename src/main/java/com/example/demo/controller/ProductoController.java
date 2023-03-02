@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.DTO.ProductoDTO;
-import com.example.demo.entities.Producto;
+import com.example.demo.DTO.ProductoNuevoDTO;
 import com.example.demo.service.ProductoService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("productos")
@@ -27,8 +28,6 @@ public class ProductoController {
 	@Autowired
 	private ProductoService productoServi;
 	
-
-
 	@GetMapping
 	public ResponseEntity<List<ProductoDTO>> obtenerTodos() {
 		return ResponseEntity.ok(productoServi.obtenerTodos());
@@ -38,14 +37,14 @@ public class ProductoController {
 		return new ResponseEntity<>(productoServi.obtenerPorId(id),HttpStatus.OK);
 	}
 	@PostMapping
-	public ResponseEntity<Producto> crearProducto(@RequestBody Producto producto) throws Exception {
-		Producto productoCreado = productoServi.crearProducto(producto);		
-		return new ResponseEntity<>(productoCreado, HttpStatus.CREATED);
+	public ResponseEntity<ProductoDTO> crearProducto(@Valid @RequestBody ProductoNuevoDTO productoDto) throws Exception {
+		ProductoDTO productoCreadoDto = productoServi.crearProducto(productoDto);		
+		return new ResponseEntity<>(productoCreadoDto, HttpStatus.CREATED);
 	}
 	@PutMapping("{id}")
-	public ResponseEntity<Producto> actualizarProducto(@PathVariable int id , @RequestBody Producto producto) throws Exception{
-		Producto productoActualizado = productoServi.actualizarProducto(id, producto);
-		return ResponseEntity.ok(productoActualizado);
+	public ResponseEntity<ProductoDTO> actualizarProducto(@PathVariable int id , @RequestBody ProductoNuevoDTO productoDto) throws Exception{
+		ProductoDTO productoActualizadoDto = productoServi.actualizarProducto(id, productoDto);
+		return ResponseEntity.ok(productoActualizadoDto);
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> eliminarPorId(@PathVariable int id) {
