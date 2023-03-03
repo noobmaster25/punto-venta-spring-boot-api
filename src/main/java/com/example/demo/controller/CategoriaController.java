@@ -19,6 +19,8 @@ import com.example.demo.DTO.CategoriaDTO;
 import com.example.demo.DTO.CategoriaNuevaDTO;
 import com.example.demo.service.CategoriaService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("categorias")
 @CrossOrigin
@@ -38,7 +40,7 @@ public class CategoriaController {
 	}
 
 	@PostMapping
-	public ResponseEntity<CategoriaDTO> crearCategoria(@RequestBody CategoriaNuevaDTO categoriaDto) {
+	public ResponseEntity<CategoriaDTO> crearCategoria(@Valid @RequestBody CategoriaNuevaDTO categoriaDto) {
 		CategoriaDTO categoriaGuardada = categoriaServi.guardarCategoria(categoriaDto);
 		return new ResponseEntity<>(categoriaGuardada, HttpStatus.CREATED);
 	}
@@ -51,7 +53,7 @@ public class CategoriaController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<CategoriaDTO> actualizarCategoria(@PathVariable int id,
-			@RequestBody CategoriaNuevaDTO categoriaDto) throws Exception {
+			@Valid @RequestBody CategoriaNuevaDTO categoriaDto) throws Exception {
 		return ResponseEntity.ok(categoriaServi.actualizarCategoria(id, categoriaDto));
 	}
 

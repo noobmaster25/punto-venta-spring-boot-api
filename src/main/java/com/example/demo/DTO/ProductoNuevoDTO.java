@@ -16,13 +16,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class ProductoNuevoDTO {
-	@NotBlank(message = "el nombre es obligatorio")
+	@NotBlank
 	private String nombre;
-	@NotBlank(message = "descripcion es obligatorio")
+	@NotBlank
 	private String descripcion;
 	
 	@NotNull
-	@Positive(message = "la cantidad debe ser mayor a cero")
+	@Positive
 	private Integer cantidad;
 	
 	@NotNull

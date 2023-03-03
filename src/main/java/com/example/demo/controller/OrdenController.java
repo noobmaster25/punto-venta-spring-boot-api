@@ -19,6 +19,8 @@ import com.example.demo.DTO.OrdenDTO;
 import com.example.demo.DTO.OrdenNuevaDTO;
 import com.example.demo.service.OrdenService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("ordenes")
 @CrossOrigin
@@ -36,11 +38,11 @@ public class OrdenController {
 		return ResponseEntity.ok(ordenServi.obtenerPorId(id));
 	}
 	@PostMapping
-	public ResponseEntity<OrdenDTO> guardarOrden(@RequestBody OrdenNuevaDTO ordenDto) throws Exception{
+	public ResponseEntity<OrdenDTO> guardarOrden(@Valid @RequestBody OrdenNuevaDTO ordenDto) throws Exception{
 		return new ResponseEntity<>(ordenServi.guardarOrden(ordenDto), HttpStatus.CREATED);
 	}
 	@PutMapping("/{id}")
-	public ResponseEntity<OrdenDTO> actualizarOrden(@PathVariable Integer id, @RequestBody OrdenNuevaDTO ordenDto) throws Exception{
+	public ResponseEntity<OrdenDTO> actualizarOrden(@PathVariable Integer id, @Valid @RequestBody OrdenNuevaDTO ordenDto) throws Exception{
 		return ResponseEntity.ok(ordenServi.actualizarOrden(id, ordenDto));
 	}
 	@DeleteMapping("/{id}")

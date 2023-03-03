@@ -19,6 +19,8 @@ import com.example.demo.DTO.ClienteDTO;
 import com.example.demo.DTO.ClienteNuevoDTO;
 import com.example.demo.service.ClienteService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("clientes")
 @CrossOrigin
@@ -38,7 +40,7 @@ public class ClienteController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ClienteDTO> guardarCliente(@RequestBody ClienteNuevoDTO clienteDto) {
+	public ResponseEntity<ClienteDTO> guardarCliente(@Valid @RequestBody ClienteNuevoDTO clienteDto) {
 		return new ResponseEntity<>(clienteServi.guardarCliente(clienteDto), HttpStatus.CREATED);
 	}
 
@@ -50,7 +52,7 @@ public class ClienteController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<ClienteDTO> actualizarClientePorId(@PathVariable Integer id,
-			@RequestBody ClienteNuevoDTO clienteDto) throws Exception {
+			@Valid @RequestBody ClienteNuevoDTO clienteDto) throws Exception {
 		return ResponseEntity.ok(clienteServi.actualizarPorId(id, clienteDto));
 	}
 

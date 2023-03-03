@@ -18,6 +18,8 @@ import com.example.demo.DTO.DetalleOrdenDTO;
 import com.example.demo.DTO.DetalleOrdenNuevaDTO;
 import com.example.demo.service.DetalleOrdenService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("detalles_orden")
 public class DetalleOrdenController {
@@ -36,14 +38,14 @@ public class DetalleOrdenController {
 	}
 
 	@PostMapping
-	public ResponseEntity<DetalleOrdenDTO> guardarDetalleOrden(@RequestBody DetalleOrdenNuevaDTO detalleOrdenDto)
+	public ResponseEntity<DetalleOrdenDTO> guardarDetalleOrden(@Valid @RequestBody DetalleOrdenNuevaDTO detalleOrdenDto)
 			throws Exception {
 		return new ResponseEntity<>(detalleServi.guardarDetalle(detalleOrdenDto), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<DetalleOrdenDTO> actualizarPorId(@PathVariable Integer id,
-			@RequestBody DetalleOrdenNuevaDTO detalleOrdenDto) throws Exception {
+			@Valid @RequestBody DetalleOrdenNuevaDTO detalleOrdenDto) throws Exception {
 		return ResponseEntity.ok(detalleServi.actualizarDetalle(id, detalleOrdenDto));
 	}
 

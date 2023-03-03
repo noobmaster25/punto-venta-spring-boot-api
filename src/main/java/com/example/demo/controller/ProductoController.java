@@ -47,7 +47,7 @@ public class ProductoController {
 
 	@PutMapping("{id}")
 	public ResponseEntity<ProductoDTO> actualizarProducto(@PathVariable int id,
-			@RequestBody ProductoNuevoDTO productoDto) throws Exception {
+			@Valid @RequestBody ProductoNuevoDTO productoDto) throws Exception {
 		ProductoDTO productoActualizadoDto = productoServi.actualizarProducto(id, productoDto);
 		return ResponseEntity.ok(productoActualizadoDto);
 	}
