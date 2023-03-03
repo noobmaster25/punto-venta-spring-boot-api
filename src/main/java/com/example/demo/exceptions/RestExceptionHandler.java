@@ -71,7 +71,7 @@ public class RestExceptionHandler {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler({ Exception.class })
 	@ResponseBody
-	public ErrorMensaje exception(Exception exception) { // The error must be corrected
+	public ErrorMensaje exception(Exception exception) {
 		return new ErrorMensaje(exception, HttpStatus.INTERNAL_SERVER_ERROR.value());
 	}
 
