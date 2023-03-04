@@ -25,9 +25,7 @@ public class CategoriaService {
 
 	public Page<CategoriaDTO> obtenerTodos(int noPagina, int tamanioPagina) {
 		Pageable pageable = PageRequest.of(noPagina, tamanioPagina);
-
 		Page<Categoria> categorias = categoriaRepo.findAll(pageable);
-
 		List<CategoriaDTO> categoriasDto = categorias.getContent().stream().map(c -> new CategoriaDTO(c))
 				.collect(Collectors.toList());
 		return new PageImpl<>(categoriasDto, pageable, categorias.getTotalElements());
