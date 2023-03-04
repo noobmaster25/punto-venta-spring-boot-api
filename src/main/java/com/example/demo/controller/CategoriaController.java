@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.DTO.CategoriaDTO;
@@ -30,12 +31,13 @@ public class CategoriaController {
 	private CategoriaService categoriaServi;
 
 	@GetMapping
-	public ResponseEntity<List<CategoriaDTO>> obtenerTodos() {
-		return ResponseEntity.ok(categoriaServi.obtenerTodos());
+	public ResponseEntity<Page<CategoriaDTO>> obtenerTodos(@RequestParam(defaultValue = "0") int noPagina,
+															@RequestParam(defaultValue = "10") int tamanioPagina) {
+		return ResponseEntity.ok(categoriaServi.obtenerTodos(noPagina,tamanioPagina));
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CategoriaDTO> obtenerPorId(@PathVariable int id){
+	public ResponseEntity<CategoriaDTO> obtenerPorId(@PathVariable int id) {
 		return new ResponseEntity<>(categoriaServi.obtenerPorId(id), HttpStatus.OK);
 	}
 
@@ -53,7 +55,7 @@ public class CategoriaController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<CategoriaDTO> actualizarCategoria(@PathVariable int id,
-			@Valid @RequestBody CategoriaNuevaDTO categoriaDto){
+			@Valid @RequestBody CategoriaNuevaDTO categoriaDto) {
 		return ResponseEntity.ok(categoriaServi.actualizarCategoria(id, categoriaDto));
 	}
 
