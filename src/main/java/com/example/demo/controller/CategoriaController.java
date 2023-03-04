@@ -35,7 +35,7 @@ public class CategoriaController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CategoriaDTO> obtenerPorId(@PathVariable int id) throws Exception {
+	public ResponseEntity<CategoriaDTO> obtenerPorId(@PathVariable int id){
 		return new ResponseEntity<>(categoriaServi.obtenerPorId(id), HttpStatus.OK);
 	}
 
@@ -53,7 +53,7 @@ public class CategoriaController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<CategoriaDTO> actualizarCategoria(@PathVariable int id,
-			@Valid @RequestBody CategoriaNuevaDTO categoriaDto) throws Exception {
+			@Valid @RequestBody CategoriaNuevaDTO categoriaDto){
 		return ResponseEntity.ok(categoriaServi.actualizarCategoria(id, categoriaDto));
 	}
 

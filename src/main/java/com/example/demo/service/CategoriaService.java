@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.DTO.CategoriaDTO;
 import com.example.demo.DTO.CategoriaNuevaDTO;
 import com.example.demo.entities.Categoria;
+import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.repository.ICategoriaRepository;
 
 @Service
@@ -23,10 +24,10 @@ public class CategoriaService {
 		return categorias.stream().map(c -> new CategoriaDTO(c)).collect(Collectors.toList());
 	}
 
-	public CategoriaDTO obtenerPorId(int id) throws Exception {
+	public CategoriaDTO obtenerPorId(int id) {
 		Optional<Categoria> categoria = categoriaRepo.findById(id);
 		if (categoria.isEmpty()) {
-			throw new Exception("no encontrado");
+			throw new NotFoundException("no se encontro categoria con id :"+id);
 		}
 		return new CategoriaDTO(categoria.get());
 	}
@@ -41,11 +42,11 @@ public class CategoriaService {
 		categoriaRepo.deleteById(id);
 	}
 
-	public CategoriaDTO actualizarCategoria(int id, CategoriaNuevaDTO categoriaDto) throws Exception {
+	public CategoriaDTO actualizarCategoria(int id, CategoriaNuevaDTO categoriaDto){
 		Optional<Categoria> categoriaAnterior = categoriaRepo.findById(id);
 
 		if (categoriaAnterior.isEmpty()) {
-			throw new Exception("no se encontro la categoria");
+			throw new NotFoundException("no se encontro categoria con id :"+id);
 		}
 		Categoria categoriaActualizada = categoriaAnterior.get();
 		categoriaActualizada.setNombre(categoriaDto.getNombre());
