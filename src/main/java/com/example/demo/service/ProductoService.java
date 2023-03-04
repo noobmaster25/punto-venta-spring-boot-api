@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.example.demo.DTO.ProductoDTO;
 import com.example.demo.DTO.ProductoNuevoDTO;
 import com.example.demo.entities.Categoria;
-import com.example.demo.entities.Cliente;
 import com.example.demo.entities.Producto;
 import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.repository.ICategoriaRepository;
@@ -35,10 +34,7 @@ public class ProductoService {
 
 	public List<ProductoDTO> obtenerTodos() {
 		List<Producto> productos = repoProducto.findAll();
-		System.out.println(productos.get(0));
-		List<ProductoDTO> listaProductos = productos.stream().map(p -> new ProductoDTO(p)).collect(Collectors.toList());
-
-		return listaProductos;
+		return productos.stream().map(p -> new ProductoDTO(p)).collect(Collectors.toList());
 	}
 
 	public ProductoDTO crearProducto(ProductoNuevoDTO productoDto) {

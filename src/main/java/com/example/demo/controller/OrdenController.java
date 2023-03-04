@@ -28,25 +28,30 @@ public class OrdenController {
 
 	@Autowired
 	private OrdenService ordenServi;
-	
+
 	@GetMapping
-	public ResponseEntity<List<OrdenDTO>> obtenerTodos(){
+	public ResponseEntity<List<OrdenDTO>> obtenerTodos() {
 		return ResponseEntity.ok(ordenServi.obtenerTodos());
 	}
+
 	@GetMapping("/{id}")
-	public ResponseEntity<OrdenDTO> obterPorId(@PathVariable Integer id) throws Exception{
+	public ResponseEntity<OrdenDTO> obterPorId(@PathVariable Integer id) {
 		return ResponseEntity.ok(ordenServi.obtenerPorId(id));
 	}
+
 	@PostMapping
-	public ResponseEntity<OrdenDTO> guardarOrden(@Valid @RequestBody OrdenNuevaDTO ordenDto) throws Exception{
+	public ResponseEntity<OrdenDTO> guardarOrden(@Valid @RequestBody OrdenNuevaDTO ordenDto) {
 		return new ResponseEntity<>(ordenServi.guardarOrden(ordenDto), HttpStatus.CREATED);
 	}
+
 	@PutMapping("/{id}")
-	public ResponseEntity<OrdenDTO> actualizarOrden(@PathVariable Integer id, @Valid @RequestBody OrdenNuevaDTO ordenDto) throws Exception{
+	public ResponseEntity<OrdenDTO> actualizarOrden(@PathVariable Integer id,
+			@Valid @RequestBody OrdenNuevaDTO ordenDto) {
 		return ResponseEntity.ok(ordenServi.actualizarOrden(id, ordenDto));
 	}
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> eliminarPorId(@PathVariable Integer id) throws Exception{
+	public ResponseEntity<Void> eliminarPorId(@PathVariable Integer id) {
 		ordenServi.eliminarPorId(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
