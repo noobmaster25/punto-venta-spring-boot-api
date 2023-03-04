@@ -13,6 +13,7 @@ import com.example.demo.DTO.ProductoDetalleOrdenDTO;
 import com.example.demo.entities.DetalleOrden;
 import com.example.demo.entities.Orden;
 import com.example.demo.entities.Producto;
+import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.repository.IDetalleOrden;
 import com.example.demo.repository.IOrdenRepository;
 import com.example.demo.repository.IProductoRepository;
@@ -38,22 +39,22 @@ public class DetalleOrdenService {
 		return detallesDto;
 	}
 
-	public DetalleOrdenDTO obtenerPorId(Integer id) throws Exception {
+	public DetalleOrdenDTO obtenerPorId(Integer id) {
 		Optional<DetalleOrden> detalleOptional = detalleRepo.findById(id);
 		if (detalleOptional.isEmpty())
-			throw new Exception("sin elemento");
+			throw new NotFoundException("no se encontro detalle orden con id:"+id);
 		return new DetalleOrdenDTO(detalleOptional.get());
 
 	}
 
-	public DetalleOrdenDTO guardarDetalle(DetalleOrdenNuevaDTO detalleOrdenDto) throws Exception {
+	public DetalleOrdenDTO guardarDetalle(DetalleOrdenNuevaDTO detalleOrdenDto){
 		Optional<Orden> orden = ordenRepo.findById(detalleOrdenDto.getId_orden());
 		Optional<Producto> producto = productoRepo.findById(detalleOrdenDto.getId_producto());
 		if (orden.isEmpty()) {
-			throw new Exception("no existe orden");
+			throw new NotFoundException("no se encontro orden asociado al detalle orden");
 		}
 		if (producto.isEmpty()) {
-			throw new Exception("no existe producto");
+			throw new NotFoundException("no se encontro el producto que desea almacenar");
 		}
 		DetalleOrden detalleOrdenNueva = new DetalleOrden(detalleOrdenDto.getNombre(), detalleOrdenDto.getCantidad(),
 				detalleOrdenDto.getPrecio(), detalleOrdenDto.getTotal(), orden.get(), producto.get());
@@ -62,26 +63,26 @@ public class DetalleOrdenService {
 		return new DetalleOrdenDTO(detalleOrdenNueva);
 	}
 
-	public void eliminarDetalle(Integer id) throws Exception {
+	public void eliminarDetalle(Integer id){
 		Optional<DetalleOrden> detalleOptional = detalleRepo.findById(id);
 		if (detalleOptional.isEmpty())
-			throw new Exception("sin elemento");
+			throw new NotFoundException("no se encontro detalle orden con id:"+id);
 		detalleRepo.deleteById(id);
 
 	}
 
-	public DetalleOrdenDTO actualizarDetalle(Integer id, DetalleOrdenNuevaDTO detalleOrdenDto) throws Exception {
+	public DetalleOrdenDTO actualizarDetalle(Integer id, DetalleOrdenNuevaDTO detalleOrdenDto){
 		Optional<DetalleOrden> detalleOptional = detalleRepo.findById(id);
 		if (detalleOptional.isEmpty())
-			throw new Exception("sin elemento");
+			throw new NotFoundException("no se encontro detalle orden con id:"+id);
 
 		Optional<Orden> orden = ordenRepo.findById(detalleOrdenDto.getId_orden());
 		if (orden.isEmpty())
-			throw new Exception("no existe orden");
+			throw new NotFoundException("no se encontro la orden asociada al detalle orden");
 
 		Optional<Producto> producto = productoRepo.findById(detalleOrdenDto.getId_producto());
 		if (producto.isEmpty())
-			throw new Exception("producto no existe");
+			throw new NotFoundException("no se encontro el producto con el que desea actualizar");
 
 		DetalleOrden detalleActualizado = detalleOptional.get();
 		detalleActualizado.setCantidad(detalleOrdenDto.getCantidad());

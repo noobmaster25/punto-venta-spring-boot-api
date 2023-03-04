@@ -33,7 +33,7 @@ public class DetalleOrdenController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<DetalleOrdenDTO> obtenerPorId(@PathVariable Integer id) throws Exception {
+	public ResponseEntity<DetalleOrdenDTO> obtenerPorId(@PathVariable Integer id){
 		return ResponseEntity.ok(detalleServi.obtenerPorId(id));
 	}
 
@@ -45,12 +45,12 @@ public class DetalleOrdenController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<DetalleOrdenDTO> actualizarPorId(@PathVariable Integer id,
-			@Valid @RequestBody DetalleOrdenNuevaDTO detalleOrdenDto) throws Exception {
+			@Valid @RequestBody DetalleOrdenNuevaDTO detalleOrdenDto){
 		return ResponseEntity.ok(detalleServi.actualizarDetalle(id, detalleOrdenDto));
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> eliminarPorId(@PathVariable Integer id) throws Exception {
+	public ResponseEntity<Void> eliminarPorId(@PathVariable Integer id){
 		detalleServi.eliminarDetalle(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
