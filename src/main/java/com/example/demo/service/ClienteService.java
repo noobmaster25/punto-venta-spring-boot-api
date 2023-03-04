@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.DTO.ClienteDTO;
 import com.example.demo.DTO.ClienteNuevoDTO;
 import com.example.demo.entities.Cliente;
+import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.repository.IClienteRepository;
 
 @Service
@@ -18,15 +19,15 @@ public class ClienteService {
 	@Autowired
 	private IClienteRepository clienteRepo;
 
-	public List<ClienteDTO> obtenerTodos() throws Exception {
+	public List<ClienteDTO> obtenerTodos(){
 		List<Cliente> clientes = clienteRepo.findAll();
 		return clientes.stream().map(c -> new ClienteDTO(c)).collect(Collectors.toList());
 	}
 
-	public ClienteDTO obtenerPorId(Integer id) throws Exception {
+	public ClienteDTO obtenerPorId(Integer id){
 		Optional<Cliente> clienteOptional = clienteRepo.findById(id);
 		if (clienteOptional.isEmpty()) {
-			throw new Exception("elemento no exsite");
+			throw new NotFoundException("no se encontro cliente con id:"+id);
 		}
 		return new ClienteDTO(clienteOptional.get());
 	}
@@ -39,18 +40,18 @@ public class ClienteService {
 		return new ClienteDTO(nuevoCliente);
 	}
 
-	public void eliminarClinetePorId(Integer id) throws Exception {
+	public void eliminarClinetePorId(Integer id){
 		Optional<Cliente> clienteOptional = clienteRepo.findById(id);
 		if (clienteOptional.isEmpty()) {
-			throw new Exception("elemento no exsite");
+			throw new NotFoundException("no se encontro cliente con id:"+id);
 		}
 		clienteRepo.deleteById(id);
 	}
 
-	public ClienteDTO actualizarPorId(Integer id, ClienteNuevoDTO clienteDto) throws Exception {
+	public ClienteDTO actualizarPorId(Integer id, ClienteNuevoDTO clienteDto){
 		Optional<Cliente> clienteOptional = clienteRepo.findById(id);
 		if (clienteOptional.isEmpty()) {
-			throw new Exception("elemento no exsite");
+			throw new NotFoundException("no se encontro cliente con id:"+id);
 		}
 
 		Cliente clienteActualizado = clienteOptional.get();

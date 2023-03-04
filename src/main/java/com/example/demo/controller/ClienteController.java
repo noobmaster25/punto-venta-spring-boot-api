@@ -30,12 +30,12 @@ public class ClienteController {
 	ClienteService clienteServi;
 
 	@GetMapping
-	public ResponseEntity<List<ClienteDTO>> obtenerTodos() throws Exception {
+	public ResponseEntity<List<ClienteDTO>> obtenerTodos(){
 		return new ResponseEntity<>(clienteServi.obtenerTodos(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ClienteDTO> obtenerPorId(@PathVariable Integer id) throws Exception {
+	public ResponseEntity<ClienteDTO> obtenerPorId(@PathVariable Integer id) {
 		return new ResponseEntity<>(clienteServi.obtenerPorId(id), HttpStatus.OK);
 	}
 
@@ -45,14 +45,14 @@ public class ClienteController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> eliminarPorId(@PathVariable Integer id) throws Exception {
+	public ResponseEntity<Void> eliminarPorId(@PathVariable Integer id){
 		clienteServi.eliminarClinetePorId(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<ClienteDTO> actualizarClientePorId(@PathVariable Integer id,
-			@Valid @RequestBody ClienteNuevoDTO clienteDto) throws Exception {
+			@Valid @RequestBody ClienteNuevoDTO clienteDto){
 		return ResponseEntity.ok(clienteServi.actualizarPorId(id, clienteDto));
 	}
 
