@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import com.example.demo.DTO.ProductoDTO;
 import com.example.demo.DTO.ProductoNuevoDTO;
 import com.example.demo.entities.Categoria;
+import com.example.demo.entities.Cliente;
 import com.example.demo.entities.Producto;
+import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.repository.ICategoriaRepository;
 import com.example.demo.repository.IProductoRepository;
 
@@ -23,10 +25,10 @@ public class ProductoService {
 	@Autowired
 	private ICategoriaRepository categoriaRepo;
 
-	public ProductoDTO obtenerPorId(int id) throws Exception {
+	public ProductoDTO obtenerPorId(int id) {
 		Optional<Producto> producto = repoProducto.findById(id);
 		if (producto.isEmpty()) {
-			throw new Exception("no encontrado");
+			throw new NotFoundException("no se encontro producto con id:"+id);
 		}
 		return new ProductoDTO(producto.get());
 	}
@@ -39,10 +41,10 @@ public class ProductoService {
 		return listaProductos;
 	}
 
-	public ProductoDTO crearProducto(ProductoNuevoDTO productoDto) throws Exception {
+	public ProductoDTO crearProducto(ProductoNuevoDTO productoDto) {
 		Optional<Categoria> categoria = categoriaRepo.findById(productoDto.getId_categoria());
 		if (categoria.isEmpty()) {
-			throw new Exception("categoria no encontrada");
+			throw new NotFoundException("no se encontro categoria con el id:"+productoDto.getId_categoria());
 		}
 		Producto productoCreadoDto = new Producto(productoDto.getNombre()
 												, productoDto.getDescripcion()
@@ -56,17 +58,21 @@ public class ProductoService {
 	}
 
 	public void eliminarProducto(int id) {
+		Optional<Producto> productoOptional = repoProducto.findById(id);
+		if (productoOptional.isEmpty()) {
+			throw new NotFoundException("no se encontro produto con id:"+id);
+		}
 		repoProducto.deleteById(id);
 	}
 
-	public ProductoDTO actualizarProducto(int id, ProductoNuevoDTO productoDto) throws Exception {
+	public ProductoDTO actualizarProducto(int id, ProductoNuevoDTO productoDto) {
 		Optional<Producto> productoAnterior = repoProducto.findById(id);
 		if (productoAnterior.isEmpty()) {
-			throw new Exception("producto no encontrado");
+			throw new NotFoundException("no se encontro produto con id:"+id);
 		}
 		Optional<Categoria> categoriaActualizada = categoriaRepo.findById(productoDto.getId_categoria());
 		if (categoriaActualizada.isEmpty()) {
-			throw new Exception("categoria no existe");
+			throw new NotFoundException("no se encontro la categoria a actualizar con id:"+productoDto.getId_categoria());
 		}
 		Producto productoActualizado = productoAnterior.get();
 		productoActualizado.setNombre(productoDto.getNombre());
