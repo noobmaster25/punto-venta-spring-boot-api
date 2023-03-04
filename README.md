@@ -67,7 +67,7 @@ Puedes utilizar una herramienta como Postman o Insomnia para realizar las solici
 [![Captura-de-pantalla-2023-02-27-21-20-32.png](https://i.postimg.cc/pThQL7RF/Captura-de-pantalla-2023-02-27-21-20-32.png)](https://postimg.cc/dkFZW57s)
 
 **Ejemplo** `GET /ordenes`
-[![Captura-de-pantalla-2023-02-27-21-27-46.png](https://i.postimg.cc/zGQVGfBx/Captura-de-pantalla-2023-02-27-21-27-46.png)](https://postimg.cc/qN8km42K)
+[![consulta-orden.png](https://i.postimg.cc/rsTH3Y5t/consulta-orden.png)](https://postimg.cc/BLhN1pYq)
 
 ## Contribuir
 Si quieres contribuir a este proyecto, por favor sigue estas instrucciones:
