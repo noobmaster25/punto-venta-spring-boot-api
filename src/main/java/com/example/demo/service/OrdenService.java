@@ -6,6 +6,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.DTO.OrdenNuevaDTO;
@@ -36,10 +40,12 @@ public class OrdenService {
 	@Autowired
 	private IDetalleOrden detalleRepo;
 
-	public List<OrdenDTO> obtenerTodos() {
-		List<Orden> listaOrden = ordenRepo.findAll();
+	public Page<OrdenDTO> obtenerTodos(int noPagina, int tamanioPagina) {
+		Pageable pageable = PageRequest.of(noPagina, tamanioPagina);
+		Page<Orden> listaOrden = ordenRepo.findAll(pageable);
+		List<OrdenDTO>listaOrdenDto = listaOrden.getContent().stream().map(o -> new OrdenDTO(o)).collect(Collectors.toList());
 
-		return listaOrden.stream().map(o -> new OrdenDTO(o)).collect(Collectors.toList());
+		return new PageImpl<>(listaOrdenDto, pageable, listaOrden.getTotalElements());
 
 	}
 
