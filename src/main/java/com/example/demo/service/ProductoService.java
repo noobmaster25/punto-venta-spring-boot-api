@@ -5,6 +5,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.DTO.ProductoDTO;
@@ -32,9 +36,11 @@ public class ProductoService {
 		return new ProductoDTO(producto.get());
 	}
 
-	public List<ProductoDTO> obtenerTodos() {
-		List<Producto> productos = repoProducto.findAll();
-		return productos.stream().map(p -> new ProductoDTO(p)).collect(Collectors.toList());
+	public Page<ProductoDTO> obtenerTodos(int noPagina, int tamanioPagina) {
+		Pageable pageable = PageRequest.of(noPagina, tamanioPagina);
+		Page<Producto> productos = repoProducto.findAll(pageable);
+		List<ProductoDTO> productosDto = productos.getContent().stream().map(p -> new ProductoDTO(p)).collect(Collectors.toList());
+		return new PageImpl<>(productosDto, pageable, productos.getTotalElements());
 	}
 
 	public ProductoDTO crearProducto(ProductoNuevoDTO productoDto) {
